@@ -50,9 +50,8 @@ public class AddEmployeePageUtils extends BasePageUtils {
         return this;
     }
 
-    public AddEmployeePageUtils submitForm() {
+    public void submitForm() {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
-        return this;
     }
 
     public AddEmployeePageUtils addManager() {
