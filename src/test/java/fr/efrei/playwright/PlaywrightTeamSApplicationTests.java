@@ -74,24 +74,37 @@ class PlaywrightTeamSApplicationTests {
     }
 
     @Test
-    public void managerCanBePromotedToManager() {
+    public void managerCannotBePromotedToManager() {
         try (Playwright playwright = Playwright.create()) {
 
             page.navigate("https://s.hr.dmerej.info/");
             page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("List Employees")).click();
             assertThat(page.getByRole(AriaRole.TABLE)).containsText("yes");
             page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Edit")).first().click();
-            assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager"))).isVisible();
+            assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager"))).isHidden();
 
         }
     }
 
+    @Test
+    public void employeeGetsPromotedToManager() {
+        try (Playwright playwright = Playwright.create()) {
 
+            page.navigate("https://s.hr.dmerej.info/employees");
+            assertThat(page.getByRole(AriaRole.TABLE)).containsText("no");
+            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Edit")).nth(1).click();
+            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager")).click();
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Proceed")).click();
+            assertThat(page.getByRole(AriaRole.TABLE)).containsText("yes");
+
+        }
+    }
 
     @Test
     public void shouldNotAllowDuplicateTeamNames() {
         page.navigate("https://s.hr.dmerej.info/");
         page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Create new team")).click();
+        page.getByPlaceholder("Name").click();
         page.getByPlaceholder("Name").click();
         page.getByPlaceholder("Name").fill("TeamS");
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
@@ -100,6 +113,8 @@ class PlaywrightTeamSApplicationTests {
         page.getByPlaceholder("Name").click();
         page.getByPlaceholder("Name").fill("TeamS");
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+        page.getByText("a team with the same name").click();
         assertThat(page.locator("form")).containsText("a team with the same name already exists");
     }
 }
