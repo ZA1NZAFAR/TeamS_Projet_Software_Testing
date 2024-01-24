@@ -3,14 +3,14 @@ package fr.efrei.playwright.utils;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
-public class AddEmployeePageUtils {
-    private final Page page;
-
+public class AddEmployeePageUtils extends BasePageUtils {
     public AddEmployeePageUtils(Page page) {
-        this.page = page;
+        super(page);
     }
 
-    public AddEmployeePageUtils goToAddEmployee() {
+    AddEmployeePageUtils addEmployeePageUtils = new AddEmployeePageUtils(page);
+
+    public AddEmployeePageUtils navigate() {
         page.navigate("https://s.hr.dmerej.info/add_employee");
         return this;
     }
@@ -50,8 +50,34 @@ public class AddEmployeePageUtils {
         return this;
     }
 
-    public AddEmployeePageUtils clickAdd() {
+    public void submitForm() {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+    }
+
+    public AddEmployeePageUtils addManager() {
+        page.navigate("https://s.hr.dmerej.info/semployee");
+        addEmployeePageUtils.navigate()
+                .fillName("TestName")
+                .fillEmail("test@test.com")
+                .fillAddress("TestAddress")
+                .fillCity("TestCity")
+                .fillZipcode("10000")
+                .fillHiringDate("2021-01-02")
+                .fillJobTitle("TestJobTitle")
+                .submitForm();
+        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Edit")).first().click();
+        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager")).click();
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Proceed")).click();
+        return this;
+    }
+    public AddEmployeePageUtils fillData(String name, String email, String address, String city, String zipcode, String hiringDate, String jobTitle) {
+        fillName(name);
+        fillEmail(email);
+        fillAddress(address);
+        fillCity(city);
+        fillZipcode(zipcode);
+        fillHiringDate(hiringDate);
+        fillJobTitle(jobTitle);
         return this;
     }
 }

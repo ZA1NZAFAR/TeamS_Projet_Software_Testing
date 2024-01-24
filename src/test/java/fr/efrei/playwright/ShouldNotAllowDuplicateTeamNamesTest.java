@@ -2,26 +2,29 @@ package fr.efrei.playwright;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import fr.efrei.playwright.utils.AddTeamPageUtils;
+import fr.efrei.playwright.utils.HomepageUtils;
+import fr.efrei.playwright.utils.TeamsPageUtils;
 import org.junit.jupiter.api.Test;
+
+import java.util.UUID;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class ShouldNotAllowDuplicateTeamNamesTest extends PlaywrightTeamSApplicationTests{
     @Test
     public void shouldNotAllowDuplicateTeamNames() {
-        page.navigate("https://s.hr.dmerej.info/");
-        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Create new team")).click();
-        page.getByPlaceholder("Name").click();
-        page.getByPlaceholder("Name").click();
-        page.getByPlaceholder("Name").fill("TeamS");
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
-        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Home")).click();
-        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Create new team")).click();
-        page.getByPlaceholder("Name").click();
-        page.getByPlaceholder("Name").fill("TeamS");
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
-        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
-        page.getByText("a team with the same name").click();
+        UUID uuid = UUID.randomUUID();
+        String teamName = "Team" + uuid;
+        AddTeamPageUtils addTeamPage = new AddTeamPageUtils(page);
+        addTeamPage.navigate().fillName(teamName).submitForm();
+
+        assert(page.url().equals("https://s.hr.dmerej.info/teams"));
+
+        AddTeamPageUtils addTeamPage2 = new AddTeamPageUtils(page);
+        addTeamPage2.navigate().fillName(teamName).submitForm();
+
+        assert(page.url().equals("https://s.hr.dmerej.info/add_team"));
         assertThat(page.locator("form")).containsText("a team with the same name already exists");
     }
 }
