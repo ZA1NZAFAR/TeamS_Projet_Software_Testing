@@ -51,4 +51,21 @@ class PlaywrightTeamSApplicationTests {
         assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Create new team"))).isVisible();
         assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Reset database"))).isVisible();
     }
+
+    @Test
+    public void spaceCharacterInNameFieldServerError() {
+        try (Playwright playwright = Playwright.create()) {
+
+            page.navigate("https://s.hr.dmerej.info/");
+            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Create new team")).click();
+            page.getByPlaceholder("Name").click();
+            page.getByPlaceholder("Name").fill("     ");
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+            assertThat(page.getByRole(AriaRole.HEADING)).containsText("Server Error (500)");
+
+        }
+    }
+
+
+
 }
