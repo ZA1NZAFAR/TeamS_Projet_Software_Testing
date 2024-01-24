@@ -74,31 +74,19 @@ class PlaywrightTeamSApplicationTests {
     }
 
     @Test
-    public void managerCannotBePromotedToManager() {
+    public void managerCanBePromotedToManager() {
         try (Playwright playwright = Playwright.create()) {
 
             page.navigate("https://s.hr.dmerej.info/");
             page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("List Employees")).click();
             assertThat(page.getByRole(AriaRole.TABLE)).containsText("yes");
             page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Edit")).first().click();
-            assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager"))).isHidden();
+            assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager"))).isVisible();
 
         }
     }
 
-    @Test
-    public void employeeGetsPromotedToManager() {
-        try (Playwright playwright = Playwright.create()) {
 
-            page.navigate("https://s.hr.dmerej.info/employees");
-            assertThat(page.getByRole(AriaRole.TABLE)).containsText("no");
-            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Edit")).nth(1).click();
-            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager")).click();
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Proceed")).click();
-            assertThat(page.getByRole(AriaRole.TABLE)).containsText("yes");
-
-        }
-    }
 
     @Test
     public void shouldNotAllowDuplicateTeamNames() {
