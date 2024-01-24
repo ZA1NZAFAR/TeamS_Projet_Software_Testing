@@ -3,13 +3,14 @@ package fr.efrei.playwright;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import fr.efrei.playwright.utils.AddEmployeePageUtils;
+import fr.efrei.playwright.utils.HomepageUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class EmployeeTests extends PlaywrightTeamSApplicationTests {
+public class AddNewEmployeeTests extends PlaywrightTeamSApplicationTests {
 
     @Test
     public void ensureCreationOfNewEmployee() {
@@ -23,23 +24,21 @@ public class EmployeeTests extends PlaywrightTeamSApplicationTests {
         String hiringDate = "2021-01-02";
         String jobTitle = "TestJobTitle " + uuid;
 
-        AddEmployeePageUtils addEmployeePageUtils = new AddEmployeePageUtils(page);
-        addEmployeePageUtils.goToAddEmployee()
-                .fillName(name)
-                .fillEmail(email)
-                .fillAddress(address)
-                .fillCity(city)
-                .fillZipcode(zipcode)
-                .fillHiringDate(hiringDate)
-                .fillJobTitle(jobTitle)
-                .clickAdd();
+        AddEmployeePageUtils employeeUtils = new AddEmployeePageUtils(page);
+        employeeUtils.navigate()
+                .fillData(name, email, address, city, zipcode, hiringDate, jobTitle)
+                .submitForm();
 
+        assert(page.url()).equals("https://s.hr.dmerej.info/employees");
+        assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName(name))).isVisible();
+        assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName(email))).isVisible();
     }
 
     @Test
-    public void shouldContainEmployees() {
-        page.navigate("https://s.hr.dmerej.info");
-        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("List Employees")).click();
+    public void shouldContainEmployees() { //TODO: rethink this test
+        HomepageUtils homepageUtils = new HomepageUtils(page);
+        homepageUtils.goToHomepage();
+        homepageUtils.goToEmployeesPage();
         assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("f f f"))).isVisible();
         assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("AAAAA"))).isVisible();
     }

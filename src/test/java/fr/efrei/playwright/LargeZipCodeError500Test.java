@@ -12,7 +12,7 @@ public class LargeZipCodeError500Test extends PlaywrightTeamSApplicationTests{
 
         AddEmployeePageUtils addEmployeePageUtils = new AddEmployeePageUtils(page);
 
-        addEmployeePageUtils.goToAddEmployee()
+        addEmployeePageUtils.navigate()
                 .fillName("TestName")
                 .fillEmail("test@test.com")
                 .fillAddress("TestAddress")
@@ -20,7 +20,7 @@ public class LargeZipCodeError500Test extends PlaywrightTeamSApplicationTests{
                 .fillZipcode("738495789347589738947598734578934758")
                 .fillHiringDate("2021-01-02")
                 .fillJobTitle("TestJobTitle")
-                .clickAdd();
+                .submitForm();
 
         //check if error 500 is displayed
         assertThat("Error 500 is displayed", !page.isVisible("text=Server Error (500)"));

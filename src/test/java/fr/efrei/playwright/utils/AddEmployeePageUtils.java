@@ -14,8 +14,7 @@ public class AddEmployeePageUtils {
 
     AddEmployeePageUtils addEmployeePageUtils = new AddEmployeePageUtils(page);
 
-
-    public AddEmployeePageUtils goToAddEmployee() {
+    public AddEmployeePageUtils navigate() {
         page.navigate("https://s.hr.dmerej.info/add_employee");
         return this;
     }
@@ -55,14 +54,14 @@ public class AddEmployeePageUtils {
         return this;
     }
 
-    public AddEmployeePageUtils clickAdd() {
+    public AddEmployeePageUtils submitForm() {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
         return this;
     }
 
     public AddEmployeePageUtils addManager() {
         page.navigate("https://s.hr.dmerej.info/semployee");
-        addEmployeePageUtils.goToAddEmployee()
+        addEmployeePageUtils.navigate()
                 .fillName("TestName")
                 .fillEmail("test@test.com")
                 .fillAddress("TestAddress")
@@ -70,11 +69,20 @@ public class AddEmployeePageUtils {
                 .fillZipcode("10000")
                 .fillHiringDate("2021-01-02")
                 .fillJobTitle("TestJobTitle")
-                .clickAdd();
+                .submitForm();
         page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Edit")).first().click();
         page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager")).click();
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Proceed")).click();
-
+        return this;
+    }
+    public AddEmployeePageUtils fillData(String name, String email, String address, String city, String zipcode, String hiringDate, String jobTitle) {
+        fillName(name);
+        fillEmail(email);
+        fillAddress(address);
+        fillCity(city);
+        fillZipcode(zipcode);
+        fillHiringDate(hiringDate);
+        fillJobTitle(jobTitle);
         return this;
     }
 }
