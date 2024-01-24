@@ -5,10 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class LargeZipCodeTest extends PlaywrightTeamSApplicationTests{
+public class NegativePostalCodeError500Test extends PlaywrightTeamSApplicationTests {
 
     @Test
-    public void largeZipCodeTest() {
+    public void ensureElementsAreVisible() {
 
         AddEmployeePageUtils addEmployeePageUtils = new AddEmployeePageUtils(page);
 
@@ -17,7 +17,7 @@ public class LargeZipCodeTest extends PlaywrightTeamSApplicationTests{
                 .fillEmail("test@test.com")
                 .fillAddress("TestAddress")
                 .fillCity("TestCity")
-                .fillZipcode("738495789347589738947598734578934758")
+                .fillZipcode("-738495789347589738947598734578934758")
                 .fillHiringDate("2021-01-02")
                 .fillJobTitle("TestJobTitle")
                 .clickAdd();
