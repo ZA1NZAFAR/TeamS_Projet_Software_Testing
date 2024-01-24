@@ -2,10 +2,11 @@ package fr.efrei.playwright.utils;
 
 import com.microsoft.playwright.Page;
 
-public class HomepageUtils {
+public class HomepageUtils extends BasePageUtils{
     private final Page page;
 
     public HomepageUtils(Page page) {
+        super(page);
         this.page = page;
     }
 

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
+//TODO: refactor this test to create/use utils classes
 public class ShouldContainEmployeesTest extends PlaywrightTeamSApplicationTests {
 
     @Test
