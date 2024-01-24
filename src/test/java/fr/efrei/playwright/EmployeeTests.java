@@ -1,5 +1,7 @@
 package fr.efrei.playwright;
 
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import fr.efrei.playwright.utils.AddEmployeePageUtils;
 import org.junit.jupiter.api.Test;
 
