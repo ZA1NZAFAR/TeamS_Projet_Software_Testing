@@ -10,7 +10,7 @@ public class EmployeeUtils {
         this.page = page;
     }
 
-    void createNewEmployee(String name, String email, String address, String city, String zipcode, String hiringDate, String jobTitle) {
+    public void createNewEmployee(String name, String email, String address, String city, String zipcode, String hiringDate, String jobTitle) {
         page.navigate("https://s.hr.dmerej.info/add_employee");
 
         page.getByPlaceholder("Name").fill(name);
