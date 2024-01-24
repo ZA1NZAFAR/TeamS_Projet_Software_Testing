@@ -7,4 +7,10 @@ public class TeamsPageUtils extends BasePageUtils {
         super(page);
     }
 
+    public TeamsPageUtils navigate() {
+        page.navigate("https://s.hr.dmerej.info/teams");
+        return this;
+    }
+
+
 }
