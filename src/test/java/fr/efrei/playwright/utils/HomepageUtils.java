@@ -20,4 +20,8 @@ public class HomepageUtils {
     public void goToCreateNewTeam() {
         page.navigate("https://s.hr.dmerej.info/create_team");
     }
+
+    public void goToEmployeesPage() {
+        page.navigate("https://s.hr.dmerej.info/employees");
+    }
 }
