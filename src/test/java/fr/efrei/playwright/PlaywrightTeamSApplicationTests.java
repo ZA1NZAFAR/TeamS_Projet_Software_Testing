@@ -66,6 +66,18 @@ class PlaywrightTeamSApplicationTests {
         }
     }
 
+    @Test
+    public void managerCannotBePromotedToManager() {
+        try (Playwright playwright = Playwright.create()) {
+
+            page.navigate("https://s.hr.dmerej.info/");
+            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("List Employees")).click();
+            assertThat(page.getByRole(AriaRole.TABLE)).containsText("yes");
+            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Edit")).first().click();
+            assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager"))).isHidden();
+
+        }
+    }
 
 
 }
