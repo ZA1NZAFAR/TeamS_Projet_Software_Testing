@@ -100,6 +100,18 @@ class PlaywrightTeamSApplicationTests {
         }
     }
 
-
-
+    @Test
+    public void shouldNotAllowDuplicateTeamNames() {
+        page.navigate("https://s.hr.dmerej.info/");
+        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Create new team")).click();
+        page.getByPlaceholder("Name").click();
+        page.getByPlaceholder("Name").fill("TeamS");
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Home")).click();
+        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Create new team")).click();
+        page.getByPlaceholder("Name").click();
+        page.getByPlaceholder("Name").fill("TeamS");
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+        assertThat(page.locator("form")).containsText("a team with the same name already exists");
+    }
 }
