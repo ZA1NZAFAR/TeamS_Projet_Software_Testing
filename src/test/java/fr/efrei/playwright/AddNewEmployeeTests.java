@@ -3,13 +3,14 @@ package fr.efrei.playwright;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 import fr.efrei.playwright.utils.AddEmployeePageUtils;
+import fr.efrei.playwright.utils.HomepageUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-public class EmployeeTests extends PlaywrightTeamSApplicationTests {
+public class AddNewEmployeeTests extends PlaywrightTeamSApplicationTests {
 
     @Test
     public void ensureCreationOfNewEmployee() {
@@ -34,9 +35,10 @@ public class EmployeeTests extends PlaywrightTeamSApplicationTests {
     }
 
     @Test
-    public void shouldContainEmployees() {
-        page.navigate("https://s.hr.dmerej.info");
-        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("List Employees")).click();
+    public void shouldContainEmployees() { //TODO: rethink this test
+        HomepageUtils homepageUtils = new HomepageUtils(page);
+        homepageUtils.goToHomepage();
+        homepageUtils.goToEmployeesPage();
         assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("f f f"))).isVisible();
         assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("AAAAA"))).isVisible();
     }
