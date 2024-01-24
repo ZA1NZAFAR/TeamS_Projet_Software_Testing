@@ -51,4 +51,12 @@ class PlaywrightTeamSApplicationTests {
         assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Create new team"))).isVisible();
         assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Reset database"))).isVisible();
     }
+
+    @Test
+    public void shouldContainEmployees() {
+        page.navigate("https://s.hr.dmerej.info");
+        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("List Employees")).click();
+        assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("f f f"))).isVisible();
+        assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("AAAAA"))).isVisible();
+    }
 }
