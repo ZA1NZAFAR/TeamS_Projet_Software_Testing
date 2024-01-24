@@ -59,4 +59,30 @@ class PlaywrightTeamSApplicationTests {
         assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("f f f"))).isVisible();
         assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("AAAAA"))).isVisible();
     }
+
+    public void spaceCharacterInNameFieldServerError() {
+        try (Playwright playwright = Playwright.create()) {
+
+            page.navigate("https://s.hr.dmerej.info/");
+            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Create new team")).click();
+            page.getByPlaceholder("Name").click();
+            page.getByPlaceholder("Name").fill("     ");
+            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+            assertThat(page.getByRole(AriaRole.HEADING)).containsText("Server Error (500)");
+
+        }
+    }
+
+    @Test
+    public void managerCannotBePromotedToManager() {
+        try (Playwright playwright = Playwright.create()) {
+
+            page.navigate("https://s.hr.dmerej.info/");
+            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("List Employees")).click();
+            assertThat(page.getByRole(AriaRole.TABLE)).containsText("yes");
+            page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Edit")).first().click();
+            assertThat(page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager"))).isHidden();
+
+        }
+    }
 }
