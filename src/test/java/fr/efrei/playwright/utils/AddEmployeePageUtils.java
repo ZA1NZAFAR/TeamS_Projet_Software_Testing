@@ -10,8 +10,8 @@ public class AddEmployeePageUtils {
         this.page = page;
     }
 
-    public AddEmployeePageUtils goToAddEmployee() {
-        new HomepageUtils(page).goToAddEmployee();
+    public AddEmployeePageUtils navigate() {
+        page.navigate("https://s.hr.dmerej.info/add_employee");
         return this;
     }
 
@@ -50,8 +50,19 @@ public class AddEmployeePageUtils {
         return this;
     }
 
-    public AddEmployeePageUtils clickAdd() {
+    public AddEmployeePageUtils submitForm() {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+        return this;
+    }
+
+    public AddEmployeePageUtils fillData(String name, String email, String address, String city, String zipcode, String hiringDate, String jobTitle) {
+        fillName(name);
+        fillEmail(email);
+        fillAddress(address);
+        fillCity(city);
+        fillZipcode(zipcode);
+        fillHiringDate(hiringDate);
+        fillJobTitle(jobTitle);
         return this;
     }
 }
