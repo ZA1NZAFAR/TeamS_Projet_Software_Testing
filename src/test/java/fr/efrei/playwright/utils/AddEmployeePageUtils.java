@@ -3,12 +3,17 @@ package fr.efrei.playwright.utils;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class AddEmployeePageUtils {
     private final Page page;
 
     public AddEmployeePageUtils(Page page) {
         this.page = page;
     }
+
+    AddEmployeePageUtils addEmployeePageUtils = new AddEmployeePageUtils(page);
+
 
     public AddEmployeePageUtils goToAddEmployee() {
         page.navigate("https://s.hr.dmerej.info/add_employee");
@@ -52,6 +57,24 @@ public class AddEmployeePageUtils {
 
     public AddEmployeePageUtils clickAdd() {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
+        return this;
+    }
+
+    public AddEmployeePageUtils addManager() {
+        page.navigate("https://s.hr.dmerej.info/semployee");
+        addEmployeePageUtils.goToAddEmployee()
+                .fillName("TestName")
+                .fillEmail("test@test.com")
+                .fillAddress("TestAddress")
+                .fillCity("TestCity")
+                .fillZipcode("10000")
+                .fillHiringDate("2021-01-02")
+                .fillJobTitle("TestJobTitle")
+                .clickAdd();
+        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Edit")).first().click();
+        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("Promote as manager")).click();
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Proceed")).click();
+
         return this;
     }
 }
