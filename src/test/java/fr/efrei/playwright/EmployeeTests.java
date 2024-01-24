@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class EmployeeTests extends PlaywrightTeamSApplicationTests {
 
     @Test
@@ -30,5 +32,13 @@ public class EmployeeTests extends PlaywrightTeamSApplicationTests {
                 .fillJobTitle(jobTitle)
                 .clickAdd();
 
+    }
+
+    @Test
+    public void shouldContainEmployees() {
+        page.navigate("https://s.hr.dmerej.info");
+        page.getByRole(AriaRole.LINK, new Page.GetByRoleOptions().setName("List Employees")).click();
+        assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("f f f"))).isVisible();
+        assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("AAAAA"))).isVisible();
     }
 }
