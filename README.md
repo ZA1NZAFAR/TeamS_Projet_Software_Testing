@@ -11,3 +11,5 @@ user : <img width="776" alt="image" src="https://github.com/ZA1NZAFAR/HR_BugTrac
 ### Is it better to create monolithic methods to do an action or various smaller methods to the same action and have a modular approach?
 
 ### Is it good to separate locator and action logic in separate classes?
+
+### One class contatining multiple tests (for the same page/feature) VS One class par test (grouped in packages) ?

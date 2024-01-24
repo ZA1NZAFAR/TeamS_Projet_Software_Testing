@@ -3,13 +3,9 @@ package fr.efrei.playwright.utils;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
-public class AddEmployeePageUtils {
-    private final Page page;
-
+public class AddEmployeePageUtils extends BasePageUtils {
     public AddEmployeePageUtils(Page page) {
-        this.page = page;
+        super(page);
     }
 
     AddEmployeePageUtils addEmployeePageUtils = new AddEmployeePageUtils(page);
