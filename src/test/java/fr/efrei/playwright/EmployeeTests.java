@@ -22,7 +22,15 @@ public class EmployeeTests extends PlaywrightTeamSApplicationTests {
         String jobTitle = "TestJobTitle " + uuid;
 
         EmployeeUtils employeeUtils = new EmployeeUtils(page);
-        employeeUtils.createNewEmployee(name, email, address, city, zipcode, hiringDate, jobTitle);
+        employeeUtils.goToAddEmployee()
+                .fillName(name)
+                .fillEmail(email)
+                .fillAddress(address)
+                .fillCity(city)
+                .fillZipcode(zipcode)
+                .fillHiringDate(hiringDate)
+                .fillJobTitle(jobTitle)
+                .clickAdd();
 
     }
 }
