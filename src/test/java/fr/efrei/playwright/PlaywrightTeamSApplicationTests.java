@@ -60,6 +60,7 @@ class PlaywrightTeamSApplicationTests {
         assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName("AAAAA"))).isVisible();
     }
 
+    @Test
     public void spaceCharacterInNameFieldServerError() {
         try (Playwright playwright = Playwright.create()) {
 
