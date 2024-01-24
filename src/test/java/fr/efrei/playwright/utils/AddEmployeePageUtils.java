@@ -11,7 +11,7 @@ public class AddEmployeePageUtils {
     }
 
     public AddEmployeePageUtils goToAddEmployee() {
-        page.navigate("https://s.hr.dmerej.info/add_employee");
+        new HomepageUtils(page).goToAddEmployee();
         return this;
     }
 
