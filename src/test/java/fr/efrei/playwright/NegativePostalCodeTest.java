@@ -1,6 +1,6 @@
 package fr.efrei.playwright;
 
-import fr.efrei.playwright.utils.EmployeeUtils;
+import fr.efrei.playwright.utils.AddEmployeePageUtils;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,9 +10,9 @@ public class NegativePostalCodeTest extends PlaywrightTeamSApplicationTests {
     @Test
     public void ensureElementsAreVisible() {
 
-        EmployeeUtils employeeUtils = new EmployeeUtils(page);
+        AddEmployeePageUtils addEmployeePageUtils = new AddEmployeePageUtils(page);
 
-        employeeUtils.goToAddEmployee()
+        addEmployeePageUtils.goToAddEmployee()
                 .fillName("TestName")
                 .fillEmail("test@test.com")
                 .fillAddress("TestAddress")
