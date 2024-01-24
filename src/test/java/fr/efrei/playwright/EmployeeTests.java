@@ -1,5 +1,7 @@
 package fr.efrei.playwright;
 
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.AriaRole;
 import fr.efrei.playwright.utils.AddEmployeePageUtils;
 import org.junit.jupiter.api.Test;
 
@@ -21,17 +23,14 @@ public class EmployeeTests extends PlaywrightTeamSApplicationTests {
         String hiringDate = "2021-01-02";
         String jobTitle = "TestJobTitle " + uuid;
 
-        AddEmployeePageUtils addEmployeePageUtils = new AddEmployeePageUtils(page);
-        addEmployeePageUtils.goToAddEmployee()
-                .fillName(name)
-                .fillEmail(email)
-                .fillAddress(address)
-                .fillCity(city)
-                .fillZipcode(zipcode)
-                .fillHiringDate(hiringDate)
-                .fillJobTitle(jobTitle)
+        AddEmployeePageUtils employeeUtils = new AddEmployeePageUtils(page);
+        employeeUtils.goToAddEmployee()
+                .fillData(name, email, address, city, zipcode, hiringDate, jobTitle)
                 .clickAdd();
 
+        assert(page.url()).equals("https://s.hr.dmerej.info/employees");
+        assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName(name))).isVisible();
+        assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName(email))).isVisible();
     }
 
     @Test
