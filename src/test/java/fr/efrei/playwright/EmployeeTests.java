@@ -24,9 +24,9 @@ public class EmployeeTests extends PlaywrightTeamSApplicationTests {
         String jobTitle = "TestJobTitle " + uuid;
 
         AddEmployeePageUtils employeeUtils = new AddEmployeePageUtils(page);
-        employeeUtils.goToAddEmployee()
+        employeeUtils.navigate()
                 .fillData(name, email, address, city, zipcode, hiringDate, jobTitle)
-                .clickAdd();
+                .submitForm();
 
         assert(page.url()).equals("https://s.hr.dmerej.info/employees");
         assertThat(page.getByRole(AriaRole.CELL, new Page.GetByRoleOptions().setName(name))).isVisible();

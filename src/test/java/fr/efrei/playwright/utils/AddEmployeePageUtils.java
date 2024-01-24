@@ -10,8 +10,8 @@ public class AddEmployeePageUtils {
         this.page = page;
     }
 
-    public AddEmployeePageUtils goToAddEmployee() {
-        new HomepageUtils(page).goToAddEmployee();
+    public AddEmployeePageUtils navigate() {
+        page.navigate("https://s.hr.dmerej.info/add_employee");
         return this;
     }
 
@@ -50,7 +50,7 @@ public class AddEmployeePageUtils {
         return this;
     }
 
-    public AddEmployeePageUtils clickAdd() {
+    public AddEmployeePageUtils submitForm() {
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add")).click();
         return this;
     }
